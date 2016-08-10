@@ -104,7 +104,7 @@ class App:
            if bstick is not None:
                      bstick.set_color(hex=self.bcolor)
            else:
-                     warn()
+                     self.warn()
 
 
        def __blink__(self):
@@ -116,7 +116,7 @@ class App:
                      bstick.pulse(name=self.color, repeats=5,
                                   duration=20)
               else:
-                     warn()
+                     self.warn()
 
        def blinkof(self):
               print()
@@ -142,25 +142,12 @@ class App:
 
 
 
-       def warn():
+       def warn(self):
               messagebox.showinfo("Blink3 Error", "No Blinksticks could be found! Please check your USB ports", icon='warning')
 
 
 if __name__ == "__main__":
        client = App()
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,15 +1,15 @@
 ##BlinkStick App
 
-#test
+#Modules
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter.colorchooser import *
 from blinkstick import blinkstick
 
+#Global variables
 bg = "#212121"
 text = "#ffffff"
-mycolor = "#ffffff"
 
 class App:
 
@@ -24,8 +24,10 @@ class App:
               self.note = ttk.Notebook(self.root, width=500, height=500,)
               self.home = Frame(self.note, background=bg)
               self.note.add(self.home, text='Home')
-              self.colour = Frame(self.note, background=bg)
-              self.note.add(self.colour, text='Colour')
+              self.colours = Frame(self.note, background=bg)
+              self.note.add(self.colours, text='Colours')
+              self.settings = Frame(self.note, background=bg)
+              self.note.add(self.settings, text='Settings')
 
               self.note.pack()
 
@@ -36,7 +38,6 @@ class App:
               self.leftHFrame.pack(side=LEFT)
 
               #Home widgets
-
               self.homeLbl = Label(self.topHFrame,text='Blink3',foreground=text, background=bg, font=('Corbel',24)).grid(row=0,column=0)
               self.vLbl = Label(self.topHFrame,foreground=text, background=bg,text='a blinkstick control app',font=('Corbel',15)).grid(row=1,column=0)
 
@@ -67,35 +68,56 @@ class App:
               self.vLbl = Label(self.topHFrame, foreground=text, background=bg, text='v1.0 - developed by alt3.readn.uk',font=('Corbel',15)).grid(row=11,column=0,pady=(30,0))
 
 
+
+
+
               #--------------------------------------------------------------------------------------------
               # colour window
 
-              self.colourtopHFrame = Frame(self.colour,pady=10, background=bg)
-              self.colourtopHFrame.pack(side=TOP)
-              self.colourleftHFrame = Frame(self.colour,padx=20)
-              self.colourleftHFrame.pack(side=LEFT)
+              self.colourTopFrame = Frame(self.colours,pady=10, background=bg)
+              self.colourTopFrame.pack(side=TOP)
 
-              self.homeLbl = Label(self.colourtopHFrame,text='Blink3',foreground=text, background=bg, font=('Corbel',24)).grid(row=0,column=0)
+              self.colorLbl = Label(self.colourTopFrame,text='Colours',foreground=text, background=bg, font=('Corbel',24)).grid(row=0,column=0)
+              
+              self.chooseLbl = Label(self.settingTopFrame,foreground=text, background=bg,text='Pick a color for your Blinkstick',font=('Corbel',15)).grid(row=4,column=0, pady=(20,0))
+              self.defaultLbl = Label(self.settingTopFrame,foreground=text, background=bg,text='by default, it is random',font=('Corbel',10)).grid(row=5,column=0,)
+
+              self.colourbutton = Button(self.settingTopFrame, highlightbackground=bg, text='Set Color', command=self.setOwnColor).grid(row=6,column=0,pady=(10,0), padx=(90,100))
+
+
+
+
+
+              #--------------------------------------------------------------------------------------------
+              # settings window
+
+              self.settingTopFrame = Frame(self.settings,pady=10, background=bg)
+              self.settingTopFrame.pack(side=TOP)
+              self.settingLeftFrame = Frame(self.settings,padx=20)
+              self.settingLeftFrame.pack(side=LEFT)
+
+              self.settingsLbl = Label(self.settingTopFrame,text='Settings',foreground=text, background=bg, font=('Corbel',24)).grid(row=0,column=0)
               #On/Off buttons
-              self.vLbl = Label(self.colourtopHFrame,foreground=text, background=bg,text='Power your blinkstick',font=('Corbel',15)).grid(row=1,column=0)
+              self.powerLbl = Label(self.settingTopFrame,foreground=text, background=bg,text='Power your blinkstick',font=('Corbel',15)).grid(row=1,column=0)
+
+              self.onlabel = Label(self.settingTopFrame,foreground=text, background=bg,text='ON',font=('Sitka',16)).grid(row=2,column=0,padx=(0,70),pady=10)
+              self.offlabel = Label(self.settingTopFrame,foreground=text, background=bg,text='OFF',font=('Sitka',16)).grid(row=3,column=0,padx=(0,70))
+
+              self.onrad = Radiobutton(self.settingTopFrame,foreground=text, background=bg, command=self.blinkon,variable=self.v,value=1).grid(row=2,column=0,padx=(40,0))
+              self.offrad = Radiobutton(self.settingTopFrame,foreground=text, background=bg, command=self.blinkoff, variable=self.v,value=0).grid(row=3,column=0,padx=(40,0))
 
 
-              self.offlabel = Label(self.colourtopHFrame,foreground=text, background=bg,text='OFF',font=('Sitka',16)).grid(row=2,column=0,padx=(0,70))
-              self.onlabel = Label(self.colourtopHFrame,foreground=text, background=bg,text='ON',font=('Sitka',16)).grid(row=2,column=2,padx=(0,400))
 
-              self.offrad = Radiobutton(self.colourtopHFrame,foreground=text, background=bg, command=self.blinkoff, variable=self.v,value=0).grid(row=2,column=0,padx=(0,0))
-              self.onrad = Radiobutton(self.colourtopHFrame,foreground=text, background=bg, command=self.blinkon,variable=self.v,value=1).grid(row=2,column=2,padx=(0,460))
 
-          
-              self.vLbl = Label(self.colourtopHFrame,foreground=text, background=bg,text='Pick a color for your Blinkstick',font=('Corbel',15)).grid(row=3,column=0, pady=(20,0))
-              self.vLbl = Label(self.colourtopHFrame,foreground=text, background=bg,text='by default, it is random',font=('Corbel',10)).grid(row=4,column=0,)
 
-              self.colourbutton = Button(self.colourtopHFrame, highlightbackground=bg, text='Set Color', command=self.setOwnColor).grid(row=5,column=0,pady=(10,0), padx=(90,100))
+              #--------------------------------------------------------------------------------------------
 
               self.root.mainloop()
 
 
-# Definitions
+
+
+# Methods
 
        def setOwnColor(self):
            bstick = blinkstick.find_first()
@@ -118,9 +140,6 @@ class App:
               else:
                      self.warn()
 
-       def blinkof(self):
-              print()
-
        def blinkon(self):
               for bstick in blinkstick.find_all():
                    bstick.set_random_color()
@@ -140,14 +159,12 @@ class App:
                print()
                
 
-
-
        def warn(self):
               messagebox.showinfo("Blink3 Error", "No Blinksticks could be found! Please check your USB ports", icon='warning')
 
 
 if __name__ == "__main__":
-       client = App()
+       Blink3 = App()
 
 
 

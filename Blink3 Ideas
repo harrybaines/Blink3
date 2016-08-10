@@ -6,4 +6,6 @@ Blink3 Ideas:
 + Allow user to change duration of the blink
 + Add comboboxes for colour selection
 + Add comboboxes for blink types
++ In settings, display the user’s BlinkStick details (name, data etc.)
++ Allow user to change their BlinkStick device name
 

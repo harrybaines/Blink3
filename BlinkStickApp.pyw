@@ -1,10 +1,10 @@
 ##BlinkStick App
 
 #test
-from Tkinter import *
-import ttk
+from tkinter import *
+from tkinter import ttk
+from tkinter import messagebox
 from blinkstick import blinkstick
-import psutil
 
 
 class App:
@@ -13,12 +13,13 @@ class App:
               #Window
               self.root = Tk()
               self.root.geometry("500x500+100+50")
-              self.root.title("BlinkStick App")
+              self.root.title("blink3")
 
               #Notebook widget
               self.note = ttk.Notebook(self.root, width=500, height=500)
               self.home = Frame(self.note)
               self.note.add(self.home, text='Home')
+
               self.note.pack()
 
               #Frames
@@ -28,6 +29,7 @@ class App:
               self.leftHFrame.pack(side=LEFT)
 
               #Window widgets
+
               self.homeLbl = Label(self.topHFrame,text='BlinkStick Client',relief=RAISED,font=('Sitka',24)).grid(row=0,column=0)
               self.vLbl = Label(self.topHFrame,text='v1.0',relief=RAISED,font=('Courier',15)).grid(row=1,column=0)
 
@@ -67,23 +69,27 @@ class App:
                      bstick.pulse(name=self.color, repeats=5,
                                   duration=20)
               else:
-                     print("No Blinksticks..")
+                     warn()
 
 
 
 
        def __quit__(self):
+           result = messagebox.askquestion("Blink3 - Quit?", "Are you sure you want to quit Blink3?",)
+           if result == 'yes':
               self.root.quit()
+           else:
+               print()
+               
 
 
+def warn():
+       messagebox.showinfo("Blink3 Error", "No Blinksticks could be found! Please check your USB ports", icon='warning')
 
 
 
 if __name__ == "__main__":
        client = App()
-
-
-
 
 
 

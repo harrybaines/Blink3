@@ -20,6 +20,8 @@ class App:
               self.root = Tk()
               self.defaultbg = backgroundColor
               self.testbg = backgroundColor1
+              self.colorText = StringVar()
+              self.colorText.set("No Colour Selected")
 
 
               self.root.geometry("620x620+625+50")
@@ -65,54 +67,45 @@ class App:
               self.colourTopFrame = Frame(self.colours,pady=10, bg=self.defaultbg)
               self.colourTopFrame.pack(side=TOP)
 
-              self.colourBottomFrame = Frame(self.colours, width=620, bg=self.testbg)
-              self.colourBottomFrame.pack(side=BOTTOM, pady=(0,50))
-
               self.colourLeftFrame = Frame(self.colours, bg=self.defaultbg)
-              self.colourLeftFrame.pack(side=LEFT, pady=(0,20))
-
-              self.colourRightFrame = Frame(self.colours,pady=10, bg=self.defaultbg)
-              self.colourRightFrame.pack(side=RIGHT, pady=(0,100))
-
+              self.colourLeftFrame.pack(side=LEFT, pady=(0,50))
 
 
               self.colorLbl = Label(self.colourTopFrame,text='Colours',foreground=texty, bg=self.defaultbg, font=('Corbel',24)).pack()
 
-              self.cOptsLbl = Label(self.colourTopFrame,foreground=texty, bg=self.defaultbg,text='Colour Options:',font=('Sitka',16)).pack()
-              self.redLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Red',font=('Sitka',14)).grid(row=3,column=0,pady=5,padx=(70,60))
-              self.blueLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Blue',font=('Sitka',14)).grid(row=4,column=0,pady=5,padx=(70,60))
-              self.greenLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Green',font=('Sitka',14)).grid(row=5,column=0,pady=5,padx=(70,60))
-              self.yellowLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Yellow',font=('Sitka',14)).grid(row=6,column=0,pady=5,padx=(70,60))
-              self.whiteLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='White',font=('Sitka',14)).grid(row=7,column=0,pady=5,padx=(70,60))
-              self.greyLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Grey',font=('Sitka',14)).grid(row=8,column=0,pady=5,padx=(70,60))
-              self.purpleLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Purple',font=('Sitka',14)).grid(row=9,column=0,pady=5,padx=(70,60))
+              self.cOptsLbl = Label(self.colourTopFrame,foreground=texty, bg=self.defaultbg,text='Choose a default colour or a custom colour:',font=('Sitka',16)).pack()
+
+              self.redLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Red',font=('Sitka',14)).grid(row=3,column=0,pady=2,padx=(70,60))
+              self.blueLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Blue',font=('Sitka',14)).grid(row=4,column=0,pady=2,padx=(70,60))
+              self.greenLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Green',font=('Sitka',14)).grid(row=5,column=0,pady=2,padx=(70,60))
+              self.yellowLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Yellow',font=('Sitka',14)).grid(row=6,column=0,pady=2,padx=(70,60))
+              self.whiteLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='White',font=('Sitka',14)).grid(row=7,column=0,pady=2,padx=(70,60))
+              self.greyLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Grey',font=('Sitka',14)).grid(row=8,column=0,pady=2,padx=(70,60))
+              self.purpleLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Purple',font=('Sitka',14)).grid(row=9,column=0,pady=2,padx=(70,60))
 
               
-              self.redRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.__blink__, highlightthickness=0,variable=self.v,value=1).grid(row=3,column=0,padx=(0,100))
-              self.blueRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.__blink__, variable=self.v,value=2).grid(row=4,column=0,padx=(0,100))
-              self.greenRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.__blink__, variable=self.v,value=3).grid(row=5,column=0,padx=(0,100))
-              self.yellowRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.__blink__, variable=self.v,value=4).grid(row=6,column=0,padx=(0,100))
-              self.whiteRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.__blink__, variable=self.v,value=5).grid(row=7,column=0,padx=(0,100))
-              self.greyRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.__blink__, variable=self.v,value=6).grid(row=8,column=0,padx=(0,100))
-              self.purpleRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.__blink__, variable=self.v,value=7).grid(row=9,column=0,padx=(0,100))
+              self.redRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.setDefColor, highlightthickness=0,variable=self.v,value=1).grid(row=3,column=0,padx=(0,100))
+              self.blueRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.setDefColor, variable=self.v,value=2).grid(row=4,column=0,padx=(0,100))
+              self.greenRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.setDefColor, variable=self.v,value=3).grid(row=5,column=0,padx=(0,100))
+              self.yellowRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.setDefColor, variable=self.v,value=4).grid(row=6,column=0,padx=(0,100))
+              self.whiteRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.setDefColor, variable=self.v,value=5).grid(row=7,column=0,padx=(0,100))
+              self.greyRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.setDefColor, variable=self.v,value=6).grid(row=8,column=0,padx=(0,100))
+              self.purpleRad = Radiobutton(self.colourLeftFrame,bg=self.defaultbg,command=self.setDefColor, variable=self.v,value=7).grid(row=9,column=0,padx=(0,100))
+
+              self.chooseLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='Pick a color:',font=('Corbel',15)).grid(row=4,column=2, pady=(10,0), padx=(5,400))
+              self.defaultLbl = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,text='by default, it is random',font=('Corbel',10)).grid(row=5,column=2, padx=(5,400))
+              self.colourbutton = Button(self.colourLeftFrame, highlightbackground=self.defaultbg, text='Set Color', command=self.setOwnColor).grid(row=6,column=2,pady=(10,0), padx=(5,400))
 
 
-              self.chooseLbl = Label(self.colourRightFrame,foreground=texty, bg=self.defaultbg,text='Pick a color for your Blinkstick',font=('Corbel',15)).grid(row=5,column=2, pady=(35,0))
-              self.defaultLbl = Label(self.colourRightFrame,foreground=texty, bg=self.defaultbg,text='by default, it is random',font=('Corbel',10)).grid(row=6,column=2)
 
-              self.colourbutton = Button(self.colourRightFrame, highlightbackground=self.defaultbg, text='Set Color', command=self.setOwnColor).grid(row=7,column=2,pady=(10,0), padx=(90,100))
+              self.colorSelectedLabel = Label(self.colourLeftFrame,foreground=texty, bg=self.defaultbg,textvariable=self.colorText, font=('Sitka',14)).grid(row=10,column=0,pady=20,padx=(200,0))
+              self.blinkTypeBox = Listbox(self.colourLeftFrame, width=13, height=7)
+              self.blinkTypeBox.grid(row=11,column=0,pady=20)
+              self.fillListbox()
+              
 
-
-              self.stateVal = "disabled"
-              self.blinkEntryVal = IntVar()
-              self.blinkentry = Entry(self.colourBottomFrame, highlightbackground=self.defaultbg, width=5, state=self.stateVal, textvariable=self.blinkEntryVal).grid(row=0,column=1)
-
-              self.blinkOptsArray = ['Static','Blink', 'Pulse', 'Morph']
-              self.blinkVal = StringVar()
-              self.blinkVal.set(self.blinkOptsArray[0])
-              self.blinkCombo = ttk.Combobox(self.colourBottomFrame, width=10, postcommand=self.combochange, textvariable=self.blinkVal, state='readonly')
-              self.blinkCombo['values'] = (self.blinkOptsArray)
-              self.blinkCombo.grid(row=0,column=0, padx=(0,5))
+              
+              
 
 
 
@@ -146,16 +139,10 @@ class App:
 
 
 # Methods
-       def combochange(self):
-          if self.blinkVal.get() == self.blinkOptsArray[0]:
-             self.stateVal = "'disabled'" 
-             self.blinkentry.configure(state=self.stateVal)
-             print(self.stateVal)
-
-
-          else:
-             self.stateVal = "normal"
-             print('NO')
+       def fillListbox(self):
+          self.blinkTypeArray = ['Static','Blink','Pulse','Morph']
+          for i in self.blinkTypeArray:
+             self.blinkTypeBox.insert(END,i)
 
 
 
@@ -169,17 +156,19 @@ class App:
            else:
               self.warn()
 
+       def setDefColor(self):
+          self.colorText.set(self.colorDict[self.v.get()])
 
-       def __blink__(self):
-              bstick = blinkstick.find_first()
+       # def __blink__(self):
+       #        bstick = blinkstick.find_first()
 
-              self.color = self.colorDict[self.v.get()]
+       #        self.color = self.colorDict[self.v.get()]
 
-              if bstick is not None:
-                 bstick.pulse(name=self.color, repeats=5,
-                                  duration=20)
-              else:
-                 self.warn()
+       #        if bstick is not None:
+       #           bstick.pulse(name=self.color, repeats=5,
+       #                            duration=20)
+       #        else:
+       #           self.warn()
 
        def blinkon(self):
               for bstick in blinkstick.find_all():
